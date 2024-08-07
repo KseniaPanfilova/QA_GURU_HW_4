@@ -1,4 +1,5 @@
 from selene import browser, be, have
+import os
 
 
 def test_student_reg_form():
@@ -21,4 +22,7 @@ def test_student_reg_form():
     browser.element('#react-select-2-option-0').click()
     browser.all('#hobbiesWrapper .custom-control-label').should(have.texts('Sports', 'Reading', 'Music'))
     browser.all('#hobbiesWrapper .custom-control-label').element_by(have.attribute('for', 'hobbies-checkbox-1')).click()
-    # browser.element('#uploadPicture')
+    browser.element('#uploadPicture').send_keys(os.path.abspath('photo.jpg'))
+    browser.element('#currentAddress').type('Some Street, some house')
+    # browser.element('.css-1wy0on6').click()
+    # browser.element('.css-11unzgr').element('#react-select-3-option-1').click()
