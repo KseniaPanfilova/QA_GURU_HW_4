@@ -4,11 +4,19 @@ import os
 
 def test_student_reg_form():
     browser.open('/')
+
     browser.element('#firstName').should(be.blank).type('John')
     browser.element('#lastName').should(be.blank).type('Dou')
     browser.element('#userEmail').should(be.blank).type('JohnDou@test.com')
+
     browser.all('#genterWrapper label').should(have.texts('Male', 'Female', 'Other'))
     browser.all('#genterWrapper label').element_by(have.attribute('for', 'gender-radio-1')).click()
+    '''
+    browser.all('[name=gender]).element_by(have.value('Male')).element('./following-sibling::label').click() - кликаем по лэйблу
+    browser.element('[name=gender][value=Male]+label').click() - кликаем по лэйблу ('+' - ищет элемент на том же уровне, ' ' - ищет элемент на любой вложенности в родительском, '>' - ищет первый вложенный элемент в родительский (непосредственно вложенный))
+    browser.all('[name=gender]).element_by(have.value('Male')).element('..').click() - кликаем по диву, который оборачивает радио-баттон и лэйбл ('..' - перейти к родительскому элементу xpath-селектор )
+    '''
+
     browser.element('#userNumber').should(be.blank).type('1234567890')
     browser.element('.react-datepicker-wrapper').click().element('#dateOfBirthInput').should(be.not_.blank)
     browser.element('.react-datepicker__tab-loop').element('.react-datepicker__month-select').click().element(
