@@ -25,6 +25,9 @@ def test_student_reg_form():
         '[value = "1985"]').click()
     browser.all('.react-datepicker__month .react-datepicker__day').element_by(have.exact_text('13')).click()
     browser.execute_script('window.scrollTo(0, document.body.scrollHeight)')
+    '''
+    browser.element('[for=hobbies-checkbox-2]').perform(command.js.scroll_into_view) - проскроллить страницу до определнного элемента
+    '''
     browser.element('#subjectsInput').type('M')
     browser.element('#react-select-2-option-0').click()
     browser.all('#hobbiesWrapper .custom-control-label').should(have.texts('Sports', 'Reading', 'Music'))
