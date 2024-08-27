@@ -1,8 +1,9 @@
 import os
 from selene import browser, be, have, command
+import tests
 
 
-class TestStudentRegFormPage:
+class StudentRegFormPage:
 
     def open(self):
         browser.open('/automation-practice-form')
@@ -43,7 +44,11 @@ class TestStudentRegFormPage:
             have.attribute('for', 'hobbies-checkbox-1')).click()
 
     def upload_photo(self):
-        browser.element('#uploadPicture').send_keys(os.path.abspath('photo.jpg'))
+        browser.element('#uploadPicture').send_keys(
+            os.path.abspath(
+                os.path.join(os.path.dirname(tests.__file__), 'resources/photo.jpg')
+            )
+        )
 
     def fill_current_address(self, value):
         browser.element('#currentAddress').type(value)
@@ -59,18 +64,18 @@ class TestStudentRegFormPage:
     def click_submit_button(self):
         browser.element('#submit').click()
 
-    def assert_user_values(self):
+    def shoud_registered_student_with(self, full_name, email, gender, mobile, date_of_birth, subjects, hobbies, picture, address, state_and_city):
         browser.element('.table').all('td').should(have.texts(
-            'Student Name', 'John Dou',
-            'Student Email', 'JohnDou@test.com',
-            'Gender', 'Male',
-            'Mobile', '1234567890',
-            'Date of Birth', '13 April,1985',
-            'Subjects', 'Maths',
-            'Hobbies', 'Sports',
-            'Picture', 'photo.jpg',
-            'Address', 'Some Street, some house',
-            'State and City', 'Uttar Pradesh Lucknow'
+            'Student Name', full_name,
+            'Student Email', email,
+            'Gender', gender,
+            'Mobile', mobile,
+            'Date of Birth', date_of_birth,
+            'Subjects', subjects,
+            'Hobbies', hobbies,
+            'Picture', picture,
+            'Address', address,
+            'State and City', state_and_city
         )
         )
 
