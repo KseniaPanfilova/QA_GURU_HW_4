@@ -2,6 +2,7 @@ import os
 from selene import browser, be, have, command
 import tests
 from data.student_info import Student
+from selenium.webdriver import Keys
 
 
 class StudentRegFormPage:
@@ -29,10 +30,9 @@ class StudentRegFormPage:
         browser.element('#userNumber').should(be.blank).type(value)
 
     def fill_date_of_birth(self, value):
-        browser.element('#dateOfBirthInput').click()
-        browser.element('.react-datepicker__month-select').click().element(f'[value = "{month}"]').click()
-        browser.element('.react-datepicker__year-select').click().element(f'[value = "{year}"]').click()
-        browser.element(f'.react-datepicker__day--0{day}').click()
+        browser.element('#dateOfBirthInput').send_keys(Keys.COMMAND, 'a').type(
+            f'{value}'
+        ).press_enter()
 
     def scroll_page_to_the_end(self):
         browser.execute_script('window.scrollTo(0, document.body.scrollHeight)')
@@ -65,21 +65,35 @@ class StudentRegFormPage:
     def click_submit_button(self):
         browser.element('#submit').click()
 
-    def shoud_registered_student_with(self, full_name, email, gender, mobile, date_of_birth, subjects, hobbies, picture, address, state_and_city):
-        browser.element('.table').all('td').should(have.texts(
-            'Student Name', full_name,
-            'Student Email', email,
-            'Gender', gender,
-            'Mobile', mobile,
-            'Date of Birth', date_of_birth,
-            'Subjects', subjects,
-            'Hobbies', hobbies,
-            'Picture', picture,
-            'Address', address,
-            'State and City', state_and_city
-        )
-        )
+    def student_registration(self, student: Student):
+        self.fill_first_name(student.first_name)
+        self.fill_last_name(student.last_name)
+        self.fill_email(student.email)
+        self.select_gender(student.gender)
+        self.fill_number(student.mobile)
+        self.fill_date_of_birth(student.date_of_birth)
+        self.scroll_page_to_the_end()
+        self.fill_subject(student.subjects)
+        self.select_hobby()
+        self.upload_photo()
+        self.fill_current_address(student.address)
+        self.fill_state(student.state)
+        self.fill_city(student.city)
+        self.click_submit_button()
 
-    def close_table(self):
+    def shoud_registered_student_with(self, student: Student):
+        browser.element('.table').all('td').should(have.texts(
+            'Student Name', f'{student.first_name} {student.last_name}',
+            'Student Email', student.email,
+            'Gender', student.gender,
+            'Mobile', student.mobile,
+            'Date of Birth', student.date_of_birth,
+            'Subjects', student.subjects,
+            'Hobbies', student.hobbies,
+            'Picture', student.picture,
+            'Address', student.address,
+            'State and City', f'{student.state} {student.city}'
+        )
+        )
         browser.element('#closeLargeModal').click()
         browser.element('#example-modal-sizes-title-lg').should(be.not_.visible)
