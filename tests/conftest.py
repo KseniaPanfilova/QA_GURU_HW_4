@@ -3,7 +3,7 @@ from selene import browser
 
 
 @pytest.fixture(scope="function", autouse=True)
-def window_size():
+def window():
     browser.config.base_url = 'https://demoqa.com'
 
     yield

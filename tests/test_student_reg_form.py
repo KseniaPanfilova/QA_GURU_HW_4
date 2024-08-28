@@ -1,5 +1,5 @@
-from data.student_info import Student
-from model.student_reg_form_page import StudentRegFormPage
+from demoqa_test.data.student_info import Student
+from demoqa_test.model.student_reg_form_page import StudentRegFormPage
 
 student = Student('John', 'Dou', 'JohnDou@test.com', 'Male', '1234567890', '13', 'April', '1985',
                   'Maths', 'Sport', 'photo.jpg', 'Some Street, some house',

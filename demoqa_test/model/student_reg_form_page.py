@@ -1,8 +1,6 @@
-import os
 from selene import browser, be, have, command
-import tests
-from data.student_info import Student
-from selenium.webdriver import Keys
+from demoqa_test import resource
+from demoqa_test.data.student_info import Student
 
 
 class StudentRegFormPage:
@@ -46,11 +44,7 @@ class StudentRegFormPage:
             have.attribute('for', 'hobbies-checkbox-1')).click()
 
     def upload_photo(self):
-        browser.element('#uploadPicture').send_keys(
-            os.path.abspath(
-                os.path.join(os.path.dirname(tests.__file__), 'resources/photo.jpg')
-            )
-        )
+        browser.element('#uploadPicture').set_value(resource.path('photo.jpg'))
 
     def fill_current_address(self, value):
         browser.element('#currentAddress').type(value)
