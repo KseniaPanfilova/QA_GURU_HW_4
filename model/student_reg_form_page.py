@@ -29,16 +29,11 @@ class StudentRegFormPage:
     def fill_number(self, value):
         browser.element('#userNumber').should(be.blank).type(value)
 
-    def fill_date_of_birth(self, value):
-        browser.element('#dateOfBirthInput').send_keys(Keys.COMMAND, 'a').type(
-            f'{value}'
-        ).press_enter()
-
-    # def fill_date_of_birth(self, day, month, year):
-    #     browser.element('#dateOfBirthInput').click()
-    #     browser.element('.react-datepicker__month-select').click().element(f'[value = "{month}"]').click()
-    #     browser.element('.react-datepicker__year-select').click().element(f'[value = "{year}"]').click()
-    #     browser.element(f'.react-datepicker__day--0{day}').click()
+    def fill_date_of_birth(self, day, month, year):
+        browser.element('#dateOfBirthInput').click()
+        browser.element('.react-datepicker__month-select').type(month)
+        browser.element('.react-datepicker__year-select').type(year)
+        browser.element(f'.react-datepicker__day--0{day}').click()
 
     def scroll_page_to_the_end(self):
         browser.execute_script('window.scrollTo(0, document.body.scrollHeight)')
@@ -77,7 +72,7 @@ class StudentRegFormPage:
         self.fill_email(student.email)
         self.select_gender(student.gender)
         self.fill_number(student.mobile)
-        self.fill_date_of_birth(student.date_of_birth)
+        self.fill_date_of_birth(student.day, student.month, student.year)
         self.scroll_page_to_the_end()
         self.fill_subject(student.subjects)
         self.select_hobby()
@@ -93,7 +88,7 @@ class StudentRegFormPage:
             'Student Email', student.email,
             'Gender', student.gender,
             'Mobile', student.mobile,
-            'Date of Birth', student.date_of_birth,
+            'Date of Birth', f'{student.day} {student.month},{student.year}',
             'Subjects', student.subjects,
             'Hobbies', student.hobbies,
             'Picture', student.picture,

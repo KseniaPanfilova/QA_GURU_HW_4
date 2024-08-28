@@ -8,7 +8,9 @@ class Student:
     email: str
     gender: str
     mobile: str
-    date_of_birth: str
+    day: str
+    month: str
+    year: str
     subjects: str
     hobbies: str
     picture: str
