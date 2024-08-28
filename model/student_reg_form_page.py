@@ -34,6 +34,12 @@ class StudentRegFormPage:
             f'{value}'
         ).press_enter()
 
+    # def fill_date_of_birth(self, day, month, year):
+    #     browser.element('#dateOfBirthInput').click()
+    #     browser.element('.react-datepicker__month-select').click().element(f'[value = "{month}"]').click()
+    #     browser.element('.react-datepicker__year-select').click().element(f'[value = "{year}"]').click()
+    #     browser.element(f'.react-datepicker__day--0{day}').click()
+
     def scroll_page_to_the_end(self):
         browser.execute_script('window.scrollTo(0, document.body.scrollHeight)')
 
