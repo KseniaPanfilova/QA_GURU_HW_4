@@ -1,6 +1,7 @@
 import os
 from selene import browser, be, have, command
 import tests
+from data.student_info import Student
 
 
 class StudentRegFormPage:
@@ -21,13 +22,13 @@ class StudentRegFormPage:
     def fill_email(self, value):
         browser.element('#userEmail').should(be.blank).type(value)
 
-    def select_gender(self, gender_type):
-        browser.element(f'[name=gender][value={gender_type}]+label').click()
+    def select_gender(self, value):
+        browser.element(f'[name=gender][value={value}]+label').click()
 
     def fill_number(self, value):
         browser.element('#userNumber').should(be.blank).type(value)
 
-    def fill_date_of_birth(self, day, month, year):
+    def fill_date_of_birth(self, value):
         browser.element('#dateOfBirthInput').click()
         browser.element('.react-datepicker__month-select').click().element(f'[value = "{month}"]').click()
         browser.element('.react-datepicker__year-select').click().element(f'[value = "{year}"]').click()
